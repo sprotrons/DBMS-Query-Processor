@@ -1,4 +1,4 @@
-//Generates "MFStruct.java" file
+//Generates "CreatedMF.java" file
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -205,7 +205,7 @@ public class MakeMF
 			classStr = this.addJavaMinFunction(classStr);
 		}
 		
-		//Add all set_count_* functions...
+		//Add all set_count_* functions
 		for(int i = 0; i != mforig.numGroupingVari; i++)
 		{
 			classStr += "\n\tpublic void ";
