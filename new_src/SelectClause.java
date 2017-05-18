@@ -157,11 +157,10 @@ public class SelectClause
 		for(int i1 = 0; i1 != theList.size(); i1++)
 		{
 			String subName = theList.get(i1);
-			parsedStr = parsedStr.replaceAll(subName, "MFTmp." + subName);
+			String afterName = convertVariableName(theList.get(i1));
+			parsedStr = parsedStr.replaceAll(subName, "MFTmp." + afterName.replaceAll("count\\D*", "count_"));
 		}
-		
-		System.out.println(parsedStr);
-		
+
 		for(int i = 0; i != tmpStr2.length(); i++)
 		{
 			if (tmpStr2.charAt(i) == '.')
@@ -177,8 +176,8 @@ public class SelectClause
 		
 		ArrayList<String> strings = new ArrayList<String>(Arrays.asList(tempStrings));
 		
-		for(int i = 0; i < tempStrings.length; i++) {
-			System.out.println(tempStrings[i]);
+		for(int i = 0; i < strings.size(); i++) {
+			System.out.println(strings.get(i));
 		}
 		
 		// Deal with and, or, '='...
@@ -238,7 +237,7 @@ public class SelectClause
 	}
 	
 	private static ArrayList<String> printMatches(String text, String regex) {
-	    Pattern pattern = Pattern.compile(regex);
+		Pattern pattern = Pattern.compile(regex);
 	    Matcher matcher = pattern.matcher(text);
 	    // Check all occurrences
 	    ArrayList<String> matches = new ArrayList<String>();
@@ -247,5 +246,31 @@ public class SelectClause
 	        matches.add(matcher.group());
 	    }
 	    return matches;
-	  }
+	}
+	
+	// Convert 1_avg_quant to avg_quant_1
+	private String convertVariableName(String name)
+	{
+		String numberStr = null;
+		if(Character.isDigit(name.charAt(0)) )
+		{
+			int j = 0;
+			for(int i = 0; i != name.length(); i++)
+			{
+				if(name.charAt(i) == '_')
+				{
+					j = i;
+					break;
+				}
+			}
+			numberStr = name.substring(0, j);
+			name = name.substring(j + 1, name.length());
+		}
+		if(numberStr != null)
+		{
+			name += "_";
+			name += numberStr;
+		}
+		return name;
+	}
 }
