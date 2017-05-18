@@ -6,7 +6,6 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 
 //To generate main file
 public class MakeMain
@@ -38,7 +37,7 @@ public class MakeMain
 	//class declaration
 	String strClassDec_1;
 	
-	//main function beginning and connecting to database
+	//main function beginning, connect to database
 	String strMain_2;
 	
 	//first scan, while loop
@@ -108,7 +107,7 @@ public class MakeMain
 		}
 	}
 	
-	//The First part of the main file, declaration of all DB needed data.
+	//First part of main file, declaration of needed data
 	private String generateDeclaration()
 	{
 		return "public class " + strClassName + "\n" + "{\n"
@@ -122,7 +121,7 @@ public class MakeMain
 				+ "\t" + "@SuppressWarnings(\"unused\")\n";
 	}
 	
-	//To generate first few lines of the main method.
+	//To generate first few lines of main 
 	private String generateIntInfo()
 	{
 		return "\n\t//main method...\n" +
@@ -229,7 +228,7 @@ public class MakeMain
 		return tmp;
 	}
 	
-	//print results at the last part.
+	//print results 
 	private String printResults()
 	{
 		String strReturn = "\t\t\t//to print out the results.\n";
@@ -287,7 +286,7 @@ public class MakeMain
 		return strReturn;
 	}
 	
-	//try to get the sub string from method name
+	//Get sub string from method name
 	//set_max_length_1 => length
 	private String myInitSubString(String name)
 	{
@@ -313,7 +312,7 @@ public class MakeMain
 		return strTmp;
 	}
 	
-	//To printout all stuffs, SELECT * FROM <TABLE>
+	//Print everything SELECT * FROM <TABLE>
 	@SuppressWarnings("unused")
 	private String myPrintAll(ArrayList<PairingTool<String, String>> FirstDBMetaPair, String tmp)
 	{
