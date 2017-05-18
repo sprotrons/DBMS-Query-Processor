@@ -2,12 +2,15 @@
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SelectClause
 {
 	FileToArray mfstruct;
 	ArrayList<String> FirstConVects = new ArrayList<String>();
 	ArrayList<String> FirstHaveCon = new ArrayList<String>();
+	ArrayList<String> FV = new ArrayList<String>();
 	ArrayList<PairingTool<Integer, String>> FirstJavaCodeConditions = new ArrayList<PairingTool<Integer, String>>();
 	ArrayList<PairingTool<Integer, String>> SecondJavaCodeConditions = new ArrayList<PairingTool<Integer, String>>();
 	DBMeta info;
@@ -19,6 +22,7 @@ public class SelectClause
 		this.info = info_Orig;
 		this.FirstConVects = file.FirstConditions;
 		this.FirstHaveCon = file.FirstHaving;
+		this.FV = file.FirstFV;
 		this.setCodeList();
 		this.setCodeList2();
 	}
@@ -132,19 +136,30 @@ public class SelectClause
 	
 	
 	private void setPairIntString2(String tmpStr2)
-	{				
+	{
 		String finish_parsedStr = new String();
 		
 		String parsedStr = tmpStr2;
 		
 		parsedStr = parsedStr.replace('\'', '\"');
-		ArrayList<PairingTool<String, String>> theList = info.getList();
+		
+		ArrayList<String> theList = new ArrayList<String>();
 		
 		for(int i1 = 0; i1 != info.getList().size(); i1++)
 		{
-			String subName = info.getList().get(i1).getFirst();
-			parsedStr = parsedStr.replaceAll("\\b(?=\\w)", "MFTmp.");
+			theList.add(info.getList().get(i1).getFirst());
 		}
+		
+		theList.addAll(FV);
+		ArrayList<String> matches = printMatches(parsedStr, "\\b\\w*");
+		theList.retainAll(matches);
+		
+		for(int i1 = 0; i1 != theList.size(); i1++)
+		{
+			String subName = theList.get(i1);
+			parsedStr = parsedStr.replaceAll(subName, "MFTmp." + subName);
+		}
+		
 		System.out.println(parsedStr);
 		
 		for(int i = 0; i != tmpStr2.length(); i++)
@@ -161,6 +176,10 @@ public class SelectClause
 		String[] tempStrings = parsedStr.split(" ");
 		
 		ArrayList<String> strings = new ArrayList<String>(Arrays.asList(tempStrings));
+		
+		for(int i = 0; i < tempStrings.length; i++) {
+			System.out.println(tempStrings[i]);
+		}
 		
 		// Deal with and, or, '='...
 		for(int j = 0; j != strings.size(); j++)
@@ -217,4 +236,16 @@ public class SelectClause
 		}
 		this.SecondJavaCodeConditions.add(new PairingTool<Integer, String>(0, finish_parsedStr));
 	}
+	
+	private static ArrayList<String> printMatches(String text, String regex) {
+	    Pattern pattern = Pattern.compile(regex);
+	    Matcher matcher = pattern.matcher(text);
+	    // Check all occurrences
+	    ArrayList<String> matches = new ArrayList<String>();
+	    while (matcher.find()) {
+	        System.out.println(" Found: " + matcher.group());
+	        matches.add(matcher.group());
+	    }
+	    return matches;
+	  }
 }
