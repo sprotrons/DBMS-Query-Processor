@@ -210,7 +210,7 @@ public class FileToArray
 		FirstGroupingAttr = this.toLowerCase(FirstGroupingAttr);
 	}
 	
-	//Set F vect into list
+	//Set Fvect into list
 	public void setFV(String currentLine)
 	{
 		int j = 0;
@@ -248,7 +248,7 @@ public class FileToArray
 		FirstFV = this.toLowerCase(FirstFV);
 	}
 	
-	//read from file, set F vect into list
+	//read from file, set Fvect into list
 	public void setFV(BufferedReader br, String currentLine)
 	{
 		try
