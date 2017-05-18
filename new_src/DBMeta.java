@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class DBMeta
 {
-	//Stores the typename pair of each column in table
+	//Stores the typename pair of each column
 	private ArrayList<PairingTool<String, String>> FirstPair = new ArrayList<PairingTool<String, String>>();
 
 	public void addValue(String column, String type)
