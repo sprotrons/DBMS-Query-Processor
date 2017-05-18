@@ -19,7 +19,7 @@ import java.sql.Statement;
 
 public class Interface
 {
-	//Declare data
+	//Database data
 	static final String JDBC_DRIVER = "org.postgresql.Driver";
 	static InterfaceInfo intInfo;
 	static DBMeta DBMeta = new DBMeta();
@@ -148,7 +148,7 @@ public class Interface
 						System.out.println("Invalid input");
 						MessageBox message = new MessageBox(shell, SWT.ICON_WARNING);
 						message.setText("Warning:");
-						message.setMessage("Invalid input!!");
+						message.setMessage("Invalid input");
 						message.open();
 						return;
 					}
@@ -161,10 +161,10 @@ public class Interface
 				}
 				catch (SQLException e) 
 				{
-					System.out.println("Cannot connect to Database.");
+					System.out.println("Could not connect to database.");
 					MessageBox message = new MessageBox(shell, SWT.ICON_WARNING);
 					message.setText("Warning:");
-					message.setMessage("Cannot connect to Database.");
+					message.setMessage("Could not connect to database.");
 					message.open();
 				}
 			}
@@ -191,7 +191,7 @@ public class Interface
 					if (tables.next())
 					{
 						MessageBox message = new MessageBox(shell, SWT.ICON_WORKING);
-						message.setMessage("Successfully connected to Database.\nTable \"" + 
+						message.setMessage("Connected to Database.\nTable \"" + 
 						intInfo.strTableName + "\"exists.");
 						message.open();
 					}
@@ -199,8 +199,8 @@ public class Interface
 					{
 						MessageBox message = new MessageBox(shell, SWT.ICON_WARNING);
 						message.setText("Warning:");
-						message.setMessage("Successfully connected to Database.\nTable \"" +
-						intInfo.strTableName + "\" does no exist.");
+						message.setMessage("Connected to Database.\nTable \"" +
+						intInfo.strTableName + "\" does not exist.");
 						message.open();
 					}
 				} 
