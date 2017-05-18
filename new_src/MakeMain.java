@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 //To generate main file
 public class MakeMain
@@ -28,7 +29,8 @@ public class MakeMain
 	
 	//import
 	String strImpt_0 = "import java.sql.*;\n"
-			+ "import java.util.ArrayList;\n\n";
+			+ "import java.util.ArrayList;\n"
+			+ "import java.util.Iterator;\n";
 	
 	//Main class name
 	String strClassName = "MainCreatedCode";
@@ -47,6 +49,8 @@ public class MakeMain
 	String strSimpleScan = null;
 	
 	String strPrintResults = null;
+	
+	String strHavingScan = null;
 	
 	String strCatchPart_end = "\t\t}\n"
 			+ "\t\tcatch (SQLException e)\n"
@@ -70,7 +74,10 @@ public class MakeMain
 		this.makeMFCode = new MakeMF(mfstruct);
 		mySCVConverter = new SelectClause(fileToArray, info);
 		this.fileToArray = new FileToArray(fileToArray);
+		System.out.println(this.mySCVConverter.FirstConVects.size());
+		System.out.println(this.mySCVConverter.FirstHaveCon.size());
 		strSimpleScan = this.generateFirstScan();
+		strHavingScan = this.generateHaving();
 		strPrintResults = this.printResults();
 	}
 	
@@ -80,7 +87,8 @@ public class MakeMain
 		if(strSimpleScan != null)
 		{
 			strTotalCode = strStartComm + strImpt_0 + strClassDec_1 + strMain_2
-					+ strFirstScan_3 + strSimpleScan + strPrintResults + strCatchPart_end;
+					+ strFirstScan_3 + strSimpleScan + strHavingScan + strPrintResults
+					+ strCatchPart_end;
 			//generate a java file
 			try
 			{
@@ -200,6 +208,23 @@ public class MakeMain
 			tmp += "\t\t\t\t\t}\n";
 			tmp += "\t\t\t\t}\n";
 		}
+		tmp += "\t\t\t}\n";
+		return tmp;
+	}
+	
+	private String generateHaving()
+	{
+		//System.out.println(this.mySCVConverter.SecondJavaCodeConditions.get(0).getFirst());
+		String tmp = new String();
+		tmp += "\t\t\t//Having Conditions.\n";
+		tmp += "\t\t\tIterator<CreatedMF> StructIterator = FirstMFStruct.iterator();\n";
+		tmp += "\t\t\twhile(StructIterator.hasNext())\n";
+		tmp += "\t\t\t{\n";
+		tmp += "\t\t\t\tCreatedMF MFTmp = StructIterator.next();\n";
+		tmp += "\t\t\t\tif((" + this.mySCVConverter.SecondJavaCodeConditions.get(0).getSecond() + ") != true)\n";
+		tmp += "\t\t\t\t{\n";
+		tmp += "\t\t\t\t\tStructIterator.remove();\n";
+		tmp += "\t\t\t\t}\n";
 		tmp += "\t\t\t}\n";
 		return tmp;
 	}

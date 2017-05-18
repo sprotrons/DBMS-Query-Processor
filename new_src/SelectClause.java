@@ -7,8 +7,9 @@ public class SelectClause
 {
 	FileToArray mfstruct;
 	ArrayList<String> FirstConVects = new ArrayList<String>();
-	ArrayList<String> FirstHaving = new ArrayList<String>();
+	ArrayList<String> FirstHaveCon = new ArrayList<String>();
 	ArrayList<PairingTool<Integer, String>> FirstJavaCodeConditions = new ArrayList<PairingTool<Integer, String>>();
+	ArrayList<PairingTool<Integer, String>> SecondJavaCodeConditions = new ArrayList<PairingTool<Integer, String>>();
 	DBMeta info;
 	
 	//Constructor
@@ -17,7 +18,7 @@ public class SelectClause
 		mfstruct = file;
 		this.info = info_Orig;
 		this.FirstConVects = file.FirstConditions;
-		this.FirstHaving = file.FirstHaving;
+		this.FirstHaveCon = file.FirstHaving;
 		this.setCodeList();
 		this.setCodeList2();
 	}
@@ -34,9 +35,10 @@ public class SelectClause
 	
 	private void setCodeList2()
 	{
-		for(int i = 0; i != this.FirstHaving.size(); i++)
+		System.out.println("Here at setCodeList2");
+		for(int i = 0; i != this.FirstHaveCon.size(); i++)
 		{
-			String tmpStr2 = this.FirstHaving.get(i);
+			String tmpStr2 = this.FirstHaveCon.get(i);
 			this.setPairIntString2(tmpStr2);
 		}
 	}
@@ -130,34 +132,34 @@ public class SelectClause
 	
 	
 	private void setPairIntString2(String tmpStr2)
-	{		
-		int target = -1;
+	{				
 		String finish_parsedStr = new String();
 		
 		String parsedStr = tmpStr2;
 		
 		parsedStr = parsedStr.replace('\'', '\"');
-
+		ArrayList<PairingTool<String, String>> theList = info.getList();
+		
 		for(int i1 = 0; i1 != info.getList().size(); i1++)
 		{
 			String subName = info.getList().get(i1).getFirst();
-			parsedStr = parsedStr.replaceAll(subName, subName + "Tmp");
+			parsedStr = parsedStr.replaceAll("\\b(?=\\w)", "MFTmp.");
 		}
-		
+		System.out.println(parsedStr);
 		
 		for(int i = 0; i != tmpStr2.length(); i++)
 		{
 			if (tmpStr2.charAt(i) == '.')
 			{
 				String tmp = tmpStr2.substring(0,i);
-				target = Integer.parseInt(tmp);
-				tmp = tmp+"\\.";
+				tmp = tmp + "\\.";
 				parsedStr = parsedStr.replaceAll(tmp,"");	
 				break;
 			}
-		}	
+		}
 		
-		String[] tempStrings = parsedStr.split(" "); 
+		String[] tempStrings = parsedStr.split(" ");
+		
 		ArrayList<String> strings = new ArrayList<String>(Arrays.asList(tempStrings));
 		
 		// Deal with and, or, '='...
@@ -213,6 +215,6 @@ public class SelectClause
 				finish_parsedStr += tempStr;
 			}
 		}
-		this.FirstJavaCodeConditions.add(new PairingTool<Integer, String>(target, finish_parsedStr));
+		this.SecondJavaCodeConditions.add(new PairingTool<Integer, String>(0, finish_parsedStr));
 	}
 }

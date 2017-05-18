@@ -141,7 +141,7 @@ public class Interface
 					}
 					if(textHavingCondition.getText().equals("") == false)
 					{
-						fileToArray.setConditions(textHavingCondition.getText());
+						fileToArray.setHaving(textHavingCondition.getText());
 					}
 					else
 					{
@@ -392,12 +392,12 @@ public class Interface
 		shell.setLayout(new GridLayout(1, false));
 
 		//First Tab
-				TabItem tab0 = new TabItem(folder, SWT.NULL);
-				tab0.setText("Database Connection");
-				Composite compAll1 = new Composite(folder, SWT.NULL);
-				tab0.setControl(compAll1);
-				compAll1.setLayout(new GridLayout(1, false));
-				compAll1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		TabItem tab0 = new TabItem(folder, SWT.NULL);
+		tab0.setText("Database Connection");
+		Composite compAll1 = new Composite(folder, SWT.NULL);
+		tab0.setControl(compAll1);
+		compAll1.setLayout(new GridLayout(1, false));
+		compAll1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
 		//Second Tab
 		TabItem tab1 = new TabItem(folder, SWT.NULL);

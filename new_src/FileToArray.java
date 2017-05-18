@@ -414,9 +414,14 @@ public class FileToArray
 				}
 			}
 			FirstHaving = this.toLowerCase(FirstHaving);
+			for(int i = 0; i != FirstHaving.size(); i++)
+			{
+				System.out.println(FirstHaving.get(i));
+				System.out.println(FirstHaving.size());
+			}
 		}
 		
-		// having conditions file version
+	// having conditions file version
 	public void setHaving(BufferedReader br, String currentLine) 
 	{
 			try
@@ -438,7 +443,6 @@ public class FileToArray
 							if(j == 0)
 							{
 								String strAttr = currentLine.substring(j, i);
-								System.out.println(strAttr);
 								this.FirstHaving.add(strAttr);
 								j = i;
 							}
@@ -449,7 +453,6 @@ public class FileToArray
 									j++;
 								}
 								String strAttr = currentLine.substring(j, i);
-								System.out.println(strAttr);
 								this.FirstHaving.add(strAttr);
 								j = i;
 							}
@@ -461,7 +464,6 @@ public class FileToArray
 								j++;
 							}
 							String strAttr = currentLine.substring(j, i + 1);
-							System.out.println(strAttr);
 							this.FirstHaving.add(strAttr);
 						}
 					}
@@ -473,9 +475,13 @@ public class FileToArray
 				e.printStackTrace();
 			}
 			FirstHaving = this.toLowerCase(FirstHaving);
+			for(int i = 0; i != FirstHaving.size(); i++)
+			{
+				System.out.println(FirstHaving.get(i));
+				System.out.println(FirstHaving.size());
+			}
 		}
 
-	
 	//Set all to lowercase since sql is not case sensitive
 	private ArrayList<String> toLowerCase(ArrayList<String> First)
 	{
